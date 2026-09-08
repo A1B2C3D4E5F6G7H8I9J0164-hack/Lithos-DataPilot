@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: ads-fastapi
+    command: uvicorn app.api.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./artifacts:/app/artifacts
+      - ./data:/app/data
+      - ./mlflow.db:/app/mlflow.db
+    environment:
+      - MLFLOW_TRACKING_URI=sqlite:///mlflow.db
+      - MODEL_BUNDLE_PATH=artifacts/model_bundle.joblib
+    restart: unless-stopped
+    networks:
+      - ads-network
+
+  dashboard:
+    build: .
+    container_name: ads-streamlit
+    command: streamlit run dashboard/app.py --server.port 8501 --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./artifacts:/app/artifacts
+      - ./data:/app/data
+      - ./mlflow.db:/app/mlflow.db
+    environment:
+      - MLFLOW_TRACKING_URI=sqlite:///mlflow.db
+      - MODEL_BUNDLE_PATH=artifacts/model_bundle.joblib
+    depends_on:
+      - api
+    restart: unless-stopped
+    networks:
+      - ads-network
+
+  mlflow:
+    build: .
+    container_name: ads-mlflow
+    command: mlflow ui --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlflow.db
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./artifacts:/app/artifacts
+      - ./mlflow.db:/app/mlflow.db
+    restart: unless-stopped
+    networks:
+      - ads-network
+
+networks:
+  ads-network:
+    driver: bridge
