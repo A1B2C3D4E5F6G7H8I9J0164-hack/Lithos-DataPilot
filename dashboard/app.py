@@ -59,11 +59,15 @@ if "selected_target" not in st.session_state:
 # --- SIDEBAR NAVIGATION ---
 with st.sidebar:
     st.markdown("""
-    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; padding: 0.5rem 0;">
-        <span style="font-size: 1.6rem;">🧠</span>
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1.6rem; padding: 0.5rem 0;">
+        <div style="width: 38px; height: 38px; border-radius: 9999px; background: linear-gradient(135deg, #F97316 0%, #E8702A 50%, #C2410C 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(232, 112, 42, 0.45); font-size: 1.15rem;">
+            ⚡
+        </div>
         <div>
-            <div style="font-weight: 700; font-size: 1.05rem; letter-spacing: -0.02em; color: #F8FAFC;">DataPilot</div>
-            <div style="font-size: 0.72rem; color: #64748B; letter-spacing: 0.04em; text-transform: uppercase;">Autonomous Data Scientist</div>
+            <div style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.18rem; letter-spacing: -0.01em; color: #F8FAFC;">
+                Lithos <span style="font-style: italic; font-weight: 400; color: #F97316;">Pilot</span>
+            </div>
+            <div style="font-size: 0.7rem; color: #9E9EA8; letter-spacing: 0.08em; text-transform: uppercase;">Autonomous Data Scientist</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -99,27 +103,27 @@ with st.sidebar:
     status_text = "Model Ready" if has_model else ("Running..." if state.is_running else "Pipeline Idle")
 
     st.markdown(f"""
-    <div style="background: #0D131F; border: 1px solid #1E293B; border-radius: 8px; padding: 0.8rem 1rem; font-size: 0.78rem;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.35rem;">
-            <span style="color: #94A3B8;">Pipeline Status</span>
+    <div style="background: #141419; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 0.9rem 1.1rem; font-size: 0.78rem; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+            <span style="color: #9E9EA8;">Pipeline Status</span>
             <span>{status_dot} <strong style="color: #F8FAFC;">{status_text}</strong></span>
         </div>
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.35rem;">
-            <span style="color: #94A3B8;">MLflow Local</span>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+            <span style="color: #9E9EA8;">MLflow Local</span>
             <span style="color: #10B981; font-weight: 500;">● Connected</span>
         </div>
         <div style="display: flex; align-items: center; justify-content: space-between;">
-            <span style="color: #94A3B8;">FastAPI Serving</span>
-            <span style="color: #38BDF8; font-weight: 500;">● Port 8000</span>
+            <span style="color: #9E9EA8;">FastAPI Gateway</span>
+            <span style="color: #F97316; font-weight: 500;">● Port 8000</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
     if st.session_state.dataset_name:
         st.markdown(f"""
-        <div style="margin-top: 1rem; font-size: 0.75rem; color: #64748B;">
-            Active Dataset: <strong style="color: #CBD5E1;">{st.session_state.dataset_name}</strong><br>
-            Target: <strong style="color: #60A5FA;">{st.session_state.selected_target or 'None'}</strong>
+        <div style="margin-top: 1rem; font-size: 0.75rem; color: #9E9EA8;">
+            Active Dataset: <strong style="color: #F8FAFC;">{st.session_state.dataset_name}</strong><br>
+            Target: <strong style="color: #F97316;">{st.session_state.selected_target or 'None'}</strong>
         </div>
         """, unsafe_allow_html=True)
 
@@ -130,15 +134,16 @@ with st.sidebar:
 if selected_nav == "Overview":
     st.markdown("""
     <div class="ads-hero">
-        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.5rem;">
-            <span class="ads-badge ads-badge-blue">AUTONOMOUS ML PLATFORM</span>
-            <span class="ads-badge ads-badge-emerald">ZERO LEAKAGE</span>
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.8rem;">
+            <span class="ads-badge ads-badge-orange">AUTONOMOUS ML PLATFORM</span>
+            <span class="ads-badge ads-badge-emerald">ZERO LEAKAGE GUARANTEE</span>
+            <span class="ads-badge" style="background: rgba(255,255,255,0.06); color: #D1D5DB; border: 1px solid rgba(255,255,255,0.12);">LITHOS DESIGN SYSTEM</span>
         </div>
-        <div class="ads-hero-title">From raw data to an explainable, production-ready ML model.</div>
+        <div class="ads-hero-title">From raw data to an <em>explainable</em>, production-ready ML model.</div>
         <div class="ads-hero-subtitle">
-            Autonomous Data Scientist performs automated validation, rigorous EDA, leakage-safe feature engineering,
+            Autonomous Data Scientist performs automated validation, rigorous exploratory analysis, leakage-safe feature engineering,
             multi-model cross-validation benchmarking, Optuna Bayesian tuning, SHAP explainability, and registers
-            the best pipeline with FastAPI serving.
+            the champion pipeline directly into the local FastAPI serving gateway.
         </div>
     </div>
     """, unsafe_allow_html=True)
