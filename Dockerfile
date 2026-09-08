@@ -26,5 +26,5 @@ RUN mkdir -p artifacts data models
 # Expose ports: 8501 (Streamlit), 8000 (FastAPI), 5000 (MLflow)
 EXPOSE 8501 8000 5000
 
-# Default command launches Streamlit workstation
-CMD ["streamlit", "run", "dashboard/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Default command launches FastAPI serving gateway on $PORT (or 8000)
+CMD ["sh", "-c", "uvicorn app.api.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
