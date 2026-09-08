@@ -11,3 +11,5 @@ htmlcov/
 .DS_Store
 .system_generated/
 mlruns/
+node_modules/
+dist/
