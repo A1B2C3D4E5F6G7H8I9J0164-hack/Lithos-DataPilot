@@ -23,7 +23,7 @@ from app.data.validator import DataValidator
 from app.data.profiler import DataProfiler, DatasetProfile
 from app.data.quality import DataQualityAuditor, QualitySeverity
 from app.data.eda import EDAEngine
-from app.ml.problem_detector import ProblemDetector, ProblemType
+from app.ml.problem_detector import ProblemDetector, ProblemType, ProblemSpec
 from app.services.pipeline import AutonomousPipelineService, PipelineState, StepStatus
 from app.tracking.mlflow_tracker import MLflowTracker
 from dashboard.components.styles import inject_custom_css, render_badge
