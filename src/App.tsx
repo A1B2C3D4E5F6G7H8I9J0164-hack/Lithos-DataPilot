@@ -34,6 +34,9 @@ const BG_IMAGE_2 =
 
 const SPOTLIGHT_R = 260;
 
+const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000').replace(/\/$/, '');
+const STREAMLIT_BASE_URL = (import.meta.env.VITE_STREAMLIT_URL || 'http://localhost:8501').replace(/\/$/, '');
+
 interface RevealLayerProps {
   image: string;
   cursorX: number;
@@ -212,10 +215,10 @@ export default function App() {
   useEffect(() => {
     const fetchBackend = async () => {
       try {
-        const hRes = await fetch('http://127.0.0.1:8000/health');
+        const hRes = await fetch(`${API_BASE_URL}/health`);
         if (hRes.ok) {
           const hData = await hRes.json();
-          const mRes = await fetch('http://127.0.0.1:8000/model');
+          const mRes = await fetch(`${API_BASE_URL}/model`);
           if (mRes.ok) {
             const mData = await mRes.json();
             setBackendStatus({
@@ -273,7 +276,7 @@ export default function App() {
   const executePrediction = async () => {
     setIsPredicting(true);
     try {
-      const res = await fetch('http://127.0.0.1:8000/predict', {
+      const res = await fetch(`${API_BASE_URL}/predict`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ features: predictInputs }),
@@ -402,7 +405,7 @@ export default function App() {
         {/* Right Action Buttons */}
         <div className="hidden md:flex items-center gap-3">
           <a
-            href="http://localhost:8501"
+            href={STREAMLIT_BASE_URL}
             target="_blank"
             rel="noreferrer"
             className="flex items-center gap-1.5 text-white/80 hover:text-white text-xs font-medium px-3.5 py-1.5 rounded-full border border-white/20 hover:bg-white/10 transition-colors"
@@ -487,12 +490,12 @@ export default function App() {
           </button>
           <hr className="border-white/10 my-1" />
           <a
-            href="http://localhost:8501"
+            href={STREAMLIT_BASE_URL}
             target="_blank"
             rel="noreferrer"
             className="text-center text-[#E8702A] text-xs font-semibold py-2"
           >
-            Launch Standalone IDE (Port 8501) &rarr;
+            Launch Standalone IDE &rarr;
           </a>
         </div>
       )}
@@ -687,7 +690,7 @@ export default function App() {
                   <span>Reload Frame</span>
                 </button>
                 <a
-                  href="http://localhost:8501"
+                  href={STREAMLIT_BASE_URL}
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold bg-[#E8702A] hover:bg-[#D4601C] text-white transition-all shadow-md shadow-[#E8702A]/30 cursor-pointer"
@@ -702,7 +705,7 @@ export default function App() {
             <div className="bg-[#0B0B0E] border-x border-b border-white/10 rounded-b-3xl overflow-hidden shadow-2xl relative">
               <iframe
                 key={iframeKey}
-                src="http://localhost:8501/?embed=true"
+                src={`${STREAMLIT_BASE_URL}/?embed=true`}
                 title="Autonomous Data Scientist Studio"
                 className="w-full h-[840px] border-none bg-[#0B0B0E]"
                 loading="lazy"
